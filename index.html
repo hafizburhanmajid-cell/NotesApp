@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <link rel="stylesheet" href="./src/output.css">
+</head>
+<body class="bg-gray-300 min-h-screen items-center flex justify-center p-6">
+    <div class="w-full max-w-xl">
+        <h1 class="text-2xl font-bold text-gray-700 text-center mb-5">NOTES APP</h1>
+        <div class="bg-white border-2 border-black/50 rounded-2xl p-10 shadow-2xl">
+            <form id="noteForm" class="w-full flex flex-col items-center p-4">
+                 <input id="title" type="text" placeholder="Title" class="w-full
+                 border border-gray-300 text-gray-700 rounded-xl p-3 focus:outline-none mb-4">
+                 <textarea name="note-content" id="note-content" placeholder="Take a note" class="w-full
+                  border border-gray-300 text-gray-700 rounded-xl p-3 focus:outline-none mb-5"></textarea>
+                  <button id="btn" class="border py-2 px-3 border-gray-300 rounded-4xl cursor-pointer text-white bg-black/50 hover:bg-black/70 transition-all ">Add Note</button>
+            </form>
+             <div id="notes" class="w-full mt-5"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

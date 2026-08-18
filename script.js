@@ -1,0 +1,21 @@
+const notetitle=document.getElementById("title");
+const notecontent=document.getElementById("note-content");
+const button=document.getElementById("btn");
+const notes=document.getElementById("notes");
+const form = document.getElementById("noteForm");
+form.addEventListener("submit",function(event){
+    event.preventDefault();
+    let titleValue=notetitle.value;
+    let contentValue=notecontent.value;
+    let newNote=document.createElement("div");
+    newNote.className ="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-4 shadow hover:shadow-lg transition-all";
+    let newTitle = document.createElement("h3");
+    newTitle.textContent = titleValue;
+    newTitle.className ="text-2xl font-bold text-amber-950 mb-2 text-center";
+    let newContent = document.createElement("p");
+    newContent.textContent = contentValue;
+    newContent.className ="text-gray-700";
+    newNote.append(newTitle);
+    newNote.append(newContent);
+    notes.append(newNote);
+});
