@@ -13,6 +13,7 @@ form.addEventListener("submit", function (event) {
     let contentValue = notecontent.value;
     let categoryValue = category.value;
     let note = {
+        id:Date.now(),
         title: titleValue,
         content: contentValue,
         category: categoryValue
@@ -22,17 +23,17 @@ form.addEventListener("submit", function (event) {
         "notes",
         JSON.stringify(savedNotes)
     );
-    displayNote(titleValue, contentValue, categoryValue);
+    displayNote(note);
     form.reset();
 });
-function displayNote(titleValue, contentValue, categoryValue) {
+function displayNote(note) {
     let newNote = document.createElement("div");
     newNote.className ="bg-black/40 border border-gray-300 rounded-xl p-5 mb-4 w-full shadow hover:shadow-lg transition-all";
     let newTitle = document.createElement("h3");
-    newTitle.textContent = titleValue;
+    newTitle.textContent = note.title;
     newTitle.className ="text-2xl font-bold text-amber-950 mb-2";
     let newContent = document.createElement("p");
-    newContent.textContent = contentValue;
+    newContent.textContent = note.content;
     newContent.className ="text-gray-900 mb-7";
     let icon = document.createElement("div");
     let topRow = document.createElement("div");
@@ -43,12 +44,8 @@ function displayNote(titleValue, contentValue, categoryValue) {
     deletebtn.className ="hover:bg-white/40 text-black/50 hover:text-red-800 rounded cursor-pointer p-1";
     deletebtn.addEventListener("click", function () {
         newNote.remove();
-        savedNotes = savedNotes.filter(function (note) {
-            return !(
-                note.title === titleValue &&
-                note.content === contentValue &&
-                note.category === categoryValue
-            );
+        savedNotes = savedNotes.filter(function (item) {
+            return item.id !== note.id;
         });
         localStorage.setItem(
             "notes",
@@ -71,30 +68,26 @@ function displayNote(titleValue, contentValue, categoryValue) {
         let newcontentvalue= prompt("Enter new content:", newContent.textContent);
         if (newtitleValue !== null) {
             newTitle.textContent =newtitleValue;
+            note.title=newtitleValue;
         }
         if (newcontentvalue !== null) {
             newContent.textContent =newcontentvalue;
+            note.content=newcontentvalue;
         }
-        savedNotes = savedNotes.map(function (note) {
-            if (
-            note.title === titleValue &&
-            note.content === contentValue &&
-            note.category === categoryValue
-        ) {
-            note.title = newtitleValue;
-            note.content = newcontentvalue;
+        savedNotes = savedNotes.map(function (item) {
+            if (item.id === note.id) {
+            item.title = note.title;
+            item.content = note.content;
         }
-        return note;
+        return item;
     });
-    titleValue=newtitleValue;
-    contentValue=newcontentvalue;
       localStorage.setItem(
         "notes",
         JSON.stringify(savedNotes)
     );
     });
     let newcategory =document.createElement("span");
-    newcategory.textContent =categoryValue;
+    newcategory.textContent =note.category;
     newcategory.className ="bg-white/30 hover:bg-white rounded-2xl cursor-text p-1 text-amber-950 px-2 text-sm";
     topRow.append(newTitle);
     topRow.append(icon);
@@ -107,11 +100,7 @@ function displayNote(titleValue, contentValue, categoryValue) {
     notes.append(newNote);
 }
 savedNotes.forEach(function (note) {
-    displayNote(
-        note.title,
-        note.content,
-        note.category
-    );
+    displayNote(note);
 });
 function rotatePin(button) {
     button.classList.toggle("rotate-45");
